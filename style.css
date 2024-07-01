@@ -1,11 +1,108 @@
+:root {
+  --red: #B01C12;
+  --gray: #A4AAB6;
+  --black: #333333;
+
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body, #app {
+html, body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+nav {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+nav > button {
+  margin: 0 10px; 
+  padding: 10px 20px;
+  background: white; 
+  cursor: pointer;
+}
+
+.content {
+  display: none;
+}
+.content.active {
+  border: 1px solid red;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  z-index: 1;
+}
+
+.firstScene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;
+}
+
+.firstScene > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.firstScene > div > img {
+  filter: brightness(0) invert(1);
+}
+
+.firstScene > div > p {
+  font-size: 24px;
+  width: 50%;
+  text-align: center;
+  letter-spacing: 4px;
+  line-height: 36px;
+}
+
+.firstScene > button {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+
+  padding: 12px 16px;
+  border: 1px solid white;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.firstScene > button:hover {
+  background-color: var(--red);
+  border: none;
+  scale: 1.05;
+  transition: all 0.2s ease;
+}
+
+.four {
+  display: none !important;
+  z-index: -1 !important;
 }
