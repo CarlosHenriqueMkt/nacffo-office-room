@@ -54,7 +54,7 @@ export function setupSceneFour(renderer) {
         const loader = new GLTFLoader();
         loader.setDRACOLoader(dracoLoader);
       
-        loader.load( 'v4.glb', function ( gltf ) {
+        loader.load( 'v5.glb', function ( gltf ) {
           
           const model = gltf.scene
           model.traverse(function (node) {
@@ -88,9 +88,29 @@ export function setupSceneFour(renderer) {
 
     // PointerLockControls
     const controls = new PointerLockControls(camera, document.body);
-    
+    const blocker = document.getElementById( 'blocker' );
+	const instructions = document.getElementById( 'instructions' );
 
-    scene.add(controls.getObject());
+	instructions.addEventListener( 'click', function () {
+
+		controls.lock();
+
+		} );
+
+	controls.addEventListener( 'lock', function () {
+
+		instructions.style.display = 'none';
+		blocker.style.display = 'none';
+
+	    } );
+
+	controls.addEventListener( 'unlock', function () {
+
+		blocker.style.display = 'block';
+		instructions.style.display = '';
+		} );
+
+				scene.add( controls.getObject() );
 
     const objects = [];
     let moveForward = false;
@@ -150,9 +170,8 @@ export function setupSceneFour(renderer) {
 
     // Animation function
     function animate() {
-        controls.lock();
         const time = performance.now();
-
+        
         raycaster.ray.origin.copy(controls.getObject().position);
         raycaster.ray.origin.y -= 10;
 

@@ -70,19 +70,26 @@ function render() {
     animateSnowflakes3();
 
     // Render each scene to its render target
-    renderer.setRenderTarget(renderTarget1);
-    renderer.render(scene1, camera1);
+    renderer.setRenderTarget(null);
+    switch (currentRenderTarget) {
+      case renderTarget1:
+        renderer.setRenderTarget(renderTarget1);
+        renderer.render(scene1, camera1);
+        break;
+      case renderTarget2:
+        renderer.setRenderTarget(renderTarget2);
+        renderer.render(scene2, camera2);
+        break;
+      case renderTarget3:
+        renderer.setRenderTarget(renderTarget3);
+        renderer.render(scene3, camera3);
+        break;
+      case renderTarget4:
+        renderer.setRenderTarget(renderTarget4);
+        renderer.render(scene4, camera4);
+        break;
+    }
 
-    renderer.setRenderTarget(renderTarget2);
-    renderer.render(scene2, camera2);
-
-    renderer.setRenderTarget(renderTarget3);
-    renderer.render(scene3, camera3);
-
-    renderer.setRenderTarget(renderTarget4);
-    /* controls4.update(); */
-
-    renderer.render(scene4, camera4);
     // Render the selected render target to the screen
     quadMaterial.uniforms.uTexture.value = currentRenderTarget.texture;
     renderer.setRenderTarget(null);
