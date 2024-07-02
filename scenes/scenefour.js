@@ -8,7 +8,7 @@ import GUI from 'lil-gui';
 
 const width = window.innerWidth;
 const height = window.innerHeight;
-const interactionRange = 1.5;
+const interactionRange = 2;
 
 export function setupSceneFour(renderer) {
     const scene = new THREE.Scene();

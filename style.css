@@ -229,8 +229,8 @@ nav > button {
   justify-content: center;
   align-items: center;
 
-  text-align: center;
-  font-size: 14px;
+  text-align: left;
+  font-size: 28px;
   cursor: pointer;
 }
 
