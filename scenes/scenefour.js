@@ -57,7 +57,7 @@ export function setupSceneFour(renderer) {
         const loader = new GLTFLoader();
         loader.setDRACOLoader(dracoLoader);
       
-        loader.load( 'vf.glb', function ( gltf ) {
+        loader.load( './vf.glb', function ( gltf ) {
           
           const blenderModel = gltf.scene
           blenderModel.traverse(function (node) {
