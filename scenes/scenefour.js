@@ -3,10 +3,12 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { RGBELoader } from 'three/examples/jsm/Addons.js';
+import gsap from 'gsap';
 
 const width = window.innerWidth;
 const height = window.innerHeight;
 const interactionRange = 2;
+let keysMaterial
 
 export function setupSceneFour(renderer) {
     const scene = new THREE.Scene();
@@ -57,15 +59,19 @@ export function setupSceneFour(renderer) {
       
         loader.load( 'vf.glb', function ( gltf ) {
           
-          const model = gltf.scene
-          model.traverse(function (node) {
+          const blenderModel = gltf.scene
+          blenderModel.traverse(function (node) {
             if (node.isMesh) {
                 node.castShadow = true;
                 node.receiveShadow = true;
                 if (node.material.map) node.material.map.anisotropy = renderer.capabilities.getMaxAnisotropy();
             }
+
+            if (node.name === "keys") {
+                keysMaterial = node.material;
+            }
         });
-          scene.add( model );
+          scene.add( blenderModel );
       
         }, undefined, function ( error ) {
       
@@ -74,6 +80,14 @@ export function setupSceneFour(renderer) {
         } );
       
       }
+
+    function materialChange() {
+        setTimeout(() => {
+            if (keysMaterial) {
+                keysMaterial.color.set('#B01C12');
+            }
+        }, 5000);
+    }
 
     const raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0), 0, 10);
     const mouse = new THREE.Vector2();
@@ -197,6 +211,7 @@ export function setupSceneFour(renderer) {
         prevTime = time;
 
         pointOfPoints()
+        materialChange()
     }
 
     /**
@@ -288,6 +303,21 @@ export function setupSceneFour(renderer) {
             point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`;
         }
     }
+
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const infoButton = document.getElementById('infoButton');
+        const drawer = document.getElementById('drawer');
+    
+        infoButton.addEventListener('click', () => {
+            drawer.classList.toggle('open');
+            if (drawer.classList.contains('open')) {
+                infoButton.textContent = 'Hide information';
+            } else {
+                infoButton.textContent = 'Show information';
+            }
+        });
+    });
 
     return { scene, camera, raycaster, mouse: new THREE.Vector2(), animate };
 }

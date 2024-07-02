@@ -127,6 +127,7 @@ function transitionToScene(sceneNumber) {
           switchContent(sceneNumber);
           gsap.to([camera1.position, camera2.position, camera3.position, camera4.position], { duration: 0, x: 0, y: 0, z: 5 });
           gsap.to([camera4.position], { duration: 0, x: 0, y: 1, z: 2 });
+          
       }
   });
 }
@@ -143,6 +144,11 @@ document.getElementById('scene3Button').addEventListener('click', () => {
 });
 document.getElementById('scene4Button').addEventListener('click', () => {
     transitionToScene(4);
+});
+
+//Return Button
+document.getElementById('sceneReturn').addEventListener('click', () => {
+    transitionToScene(3);
 });
 
 // Start the rendering loop

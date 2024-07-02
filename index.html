@@ -8,9 +8,6 @@
 </head>
 <body>
     <canvas id="canvas"></canvas>
-    <nav>
-      <button id="scene1Button">Scene 1</button>
-    </nav>
     <div id="content1" class="content">
       <div class="firstScene">
         <div>
@@ -21,6 +18,7 @@
       </div>
     </div>
     <div id="content2" class="content">
+      <button id="scene1Button" class="return">Voltar</button>
       <div class="secondScene">
         <div>
           <img src="logo-vert.png" alt="">
@@ -36,6 +34,7 @@
       </div>
     </div>
     <div id="content3" class="content">
+      <button id="scene2Button" class="return">Voltar</button>
         <div class="thirdScene">
           <div>
             <img src="logo-vert.png" alt="">
@@ -44,14 +43,15 @@
           <div>
             <button id="scene4Button">Office Room 1</button>
             <button class="inactive">Office Room 2</button>
-            <button class="inactive">1st FLOOR</button>
-            <button class="inactive">2nd FLOOR</button>
-            <button class="inactive">3rd FLOOR</button>
-            <button class="inactive">4th FLOOR</button>
+            <button class="inactive">Prayer Room</button>
+            <button class="inactive">Heavy Section</button>
+            <button class="inactive">Fire Section</button>
+            <button class="inactive">Personal Security</button>
           </div>
         </div>
     </div>
     <div id="content4" class="content">
+      
       <div id="blocker">
         <div id="instructions">
           <p style="font-size:36px">
@@ -76,6 +76,12 @@
       <div class="point point-2">
           <div class="label">3</div>
           <div class="text">Cameras supporting night vision and heat vision with automatic adjustment.</div>
+      </div>
+        <button id="sceneReturn" class="return">Voltar</button>
+        <button id="infoButton" class="info-button">Show information</button>
+      <div id="drawer" class="drawer">
+          <h2>Information</h2>
+          <p>This is some information about the scene.</p>
       </div>
     </div>
     <script type="module" src="./main.js"></script>
