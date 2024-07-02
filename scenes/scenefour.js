@@ -4,12 +4,24 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import GUI from 'lil-gui'; 
+
+const width = window.innerWidth;
+const height = window.innerHeight;
+const interactionRange = 1.5;
 
 export function setupSceneFour(renderer) {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x005500)
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const gui = new GUI();
 
+    gui.add(camera.position, 'x').min(-100).max(100).step(0.1).name('camera position X')
+    gui.add(camera.position, 'y').min(-100).max(100).step(0.1).name('camera position Y')
+    gui.add(camera.position, 'z').min(-100).max(100).step(0.1).name('camera position Z')
+    gui.add(camera.rotation, 'x').min(-100).max(100).step(0.1).name('camera rotation X')
+    gui.add(camera.rotation, 'y').min(-100).max(100).step(0.1).name('camera rotation Y')
+    gui.add(camera.rotation, 'z').min(-100).max(100).step(0.1).name('camera rotation Z')
 
     const axesHelper = new THREE.AxesHelper( 5 );
     scene.add( axesHelper );
@@ -39,6 +51,9 @@ export function setupSceneFour(renderer) {
     sunLight.shadow.camera.bottom = -10;
     scene.add(sunLight);
     
+    document.addEventListener('DOMContentLoaded', function() {
+        model();
+    });
 
     function model() {
 
@@ -74,17 +89,13 @@ export function setupSceneFour(renderer) {
       
       }
 
-    model()
-
-    const orbitControls = new OrbitControls(camera, document.getElementById('canvas'));
-    orbitControls.enableDamping = true;
-
+    const raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0), 0, 10);
     const mouse = new THREE.Vector2();
 
-    /* document.addEventListener('mousemove', (event) => {
+    document.addEventListener('mousemove', (event) => {
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-    }); */
+    });
 
     // PointerLockControls
     const controls = new PointerLockControls(camera, document.body);
@@ -110,7 +121,7 @@ export function setupSceneFour(renderer) {
 		instructions.style.display = '';
 		} );
 
-				scene.add( controls.getObject() );
+	scene.add( controls.getObject() );
 
     const objects = [];
     let moveForward = false;
@@ -166,8 +177,6 @@ export function setupSceneFour(renderer) {
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
 
-    const raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0), 0, 10);
-
     // Animation function
     function animate() {
         const time = performance.now();
@@ -200,7 +209,98 @@ export function setupSceneFour(renderer) {
         controls.moveForward(-velocity.z * delta);
 
         prevTime = time;
+
+        pointOfPoints()
     }
 
-    return { scene, camera, /* orbitControls, */ raycaster, mouse: new THREE.Vector2(), animate };
+    /**
+     * Points in View
+    */
+
+    const points = [
+        {
+            position: new THREE.Vector3(-2.6, 0.3, 2),
+            element: document.querySelector('.point-0')
+        },
+        {
+            position: new THREE.Vector3(0.5, 0.5, -1.8),
+            element: document.querySelector('.point-1')
+        },
+        {
+            position: new THREE.Vector3(-2.3, 1, -2.2),
+            element: document.querySelector('.point-2')
+        }
+    ]
+
+    const hoverInteraction = function (event) {
+        if (event.code === 'KeyE') {
+            // Check for interactive points
+            for (const point of points) {
+                if (point.element.classList.contains('interactive')) {
+                    // Trigger hover effect
+                    point.element.querySelector('.text').style.opacity = '1';
+                    console.log("Interacted with:", point.element);
+                }
+            }
+        } else if (event.code === 'KeyC') {
+            // Remove hover effect
+            for (const point of points) {
+                if (point.element.classList.contains('interactive')) {
+                    point.element.querySelector('.text').style.opacity = '0';
+                    console.log("Interaction undone for:", point.element);
+                }
+            }
+        }
+    };
+    
+    document.addEventListener('keydown', hoverInteraction);
+    
+    function isPointInView(point) {
+        const frustum = new THREE.Frustum();
+        const cameraViewProjectionMatrix = new THREE.Matrix4();
+    
+        camera.updateMatrixWorld(); // make sure the camera matrix is updated
+        cameraViewProjectionMatrix.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+        frustum.setFromProjectionMatrix(cameraViewProjectionMatrix);
+    
+        return frustum.containsPoint(point);
+    }
+
+    function pointOfPoints() {
+        // Go through each point
+        for (const point of points) {
+            // Get 2D screen position
+            const screenPosition = point.position.clone();
+            screenPosition.project(camera);
+    
+            // Calculate distance to camera
+            const distance = point.position.distanceTo(camera.position);
+    
+            // Check if point is within interaction range
+            if (distance < interactionRange && isPointInView(point.position)) {
+                // Set the raycaster
+                raycaster.setFromCamera(screenPosition, camera);
+                const intersects = raycaster.intersectObjects(scene.children, true);
+    
+                // No intersect found or point is closer than intersection
+                if (intersects.length === 0 || intersects[0].distance > distance) {
+                    // Show and make point interactive
+                    point.element.classList.add('visible', 'interactive');
+                } else {
+                    // Hide point if obstructed
+                    point.element.classList.remove('visible', 'interactive');
+                }
+            } else {
+                // Hide point if out of range
+                point.element.classList.remove('visible', 'interactive');
+            }
+    
+            // Update position on screen
+            const translateX = screenPosition.x * width * 0.5;
+            const translateY = -screenPosition.y * height * 0.5;
+            point.element.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`;
+        }
+    }
+
+    return { scene, camera, raycaster, mouse: new THREE.Vector2(), animate };
 }

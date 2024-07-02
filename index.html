@@ -10,8 +10,6 @@
     <canvas id="canvas"></canvas>
     <nav>
       <button id="scene1Button">Scene 1</button>
-      <button id="scene3Button">Scene 3</button>
-      <button id="scene4Button">Scene 4</button>
     </nav>
     <div id="content1" class="content">
       <div class="firstScene">
@@ -22,8 +20,37 @@
         <button id="scene2Button">Conheça nossa estrutura</button>
       </div>
     </div>
-    <div id="content2" class="content">Content for Scene 2</div>
-    <div id="content3" class="content">Content for Scene 3</div>
+    <div id="content2" class="content">
+      <div class="secondScene">
+        <div>
+          <img src="logo-vert.png" alt="">
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste corrupti eaque unde et, repudiandae tempora molestias eligendi corporis aliquid! Ut, assumenda. Illum quia ducimus dignissimos dolore iste consequuntur, molestias laudantium!</p>
+        </div>
+        <div>
+          <button id="scene3Button">GROUND FLOOR</button>
+          <button class="inactive">1st FLOOR</button>
+          <button class="inactive">2nd FLOOR</button>
+          <button class="inactive">3rd FLOOR</button>
+          <button class="inactive">4th FLOOR</button>
+        </div>
+      </div>
+    </div>
+    <div id="content3" class="content">
+        <div class="thirdScene">
+          <div>
+            <img src="logo-vert.png" alt="">
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste corrupti eaque unde et, repudiandae tempora molestias eligendi corporis aliquid! Ut, assumenda. Illum quia ducimus dignissimos dolore iste consequuntur, molestias laudantium!</p>
+          </div>
+          <div>
+            <button id="scene4Button">Office Room 1</button>
+            <button class="inactive">Office Room 2</button>
+            <button class="inactive">1st FLOOR</button>
+            <button class="inactive">2nd FLOOR</button>
+            <button class="inactive">3rd FLOOR</button>
+            <button class="inactive">4th FLOOR</button>
+          </div>
+        </div>
+    </div>
     <div id="content4" class="content">
       <div id="blocker">
         <div id="instructions">
@@ -36,6 +63,18 @@
             Interact: LMB
           </p>
         </div>
+      </div>
+      <div class="point point-0">
+          <div class="label">1</div>
+          <div class="text">Front and top screen with HUD aggregating terrain and battle informations.</div>
+      </div>
+      <div class="point point-1">
+          <div class="label">2</div>
+          <div class="text">Ventilation with air purifier and detection of environment toxicity.</div>
+      </div>
+      <div class="point point-2">
+          <div class="label">3</div>
+          <div class="text">Cameras supporting night vision and heat vision with automatic adjustment.</div>
       </div>
     </div>
     <script type="module" src="./main.js"></script>

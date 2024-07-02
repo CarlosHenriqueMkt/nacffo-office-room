@@ -26,7 +26,7 @@ const renderTarget4 = new THREE.WebGLRenderTarget(window.innerWidth, window.inne
 const { scene: scene1, camera: camera1, animateSnowflakes: animateSnowflakes1 } = setupSceneOne();
 const { scene: scene2, camera: camera2, animateSnowflakes: animateSnowflakes2 } = setupSceneTwo();
 const { scene: scene3, camera: camera3, animateSnowflakes: animateSnowflakes3 } = setupSceneThree();
-const { scene: scene4, camera: camera4, /* orbitControls: controls4, */ animate: animate } = setupSceneFour(renderer);
+const { scene: scene4, camera: camera4, animate: animate } = setupSceneFour(renderer);
 
 // Quad to display the render targets
 const quadGeometry = new THREE.PlaneGeometry(2, 2);
@@ -65,22 +65,21 @@ function render() {
         animate();  // Update controls for Scene 4
     }
 
-    animateSnowflakes1();
-    animateSnowflakes2();
-    animateSnowflakes3();
-
     // Render each scene to its render target
     renderer.setRenderTarget(null);
     switch (currentRenderTarget) {
       case renderTarget1:
+        animateSnowflakes1();
         renderer.setRenderTarget(renderTarget1);
         renderer.render(scene1, camera1);
         break;
       case renderTarget2:
+        animateSnowflakes2();
         renderer.setRenderTarget(renderTarget2);
         renderer.render(scene2, camera2);
         break;
       case renderTarget3:
+        animateSnowflakes3();
         renderer.setRenderTarget(renderTarget3);
         renderer.render(scene3, camera3);
         break;
@@ -117,7 +116,7 @@ function transitionToScene(sceneNumber) {
     return; // Exit early if the button for the current scene is clicked again
   }
 
-  gsap.to([camera1.position, camera2.position, camera3.position, camera4.position], {
+  gsap.to([camera1.position, camera2.position, camera3.position], {
       duration: 1, // Duration of the transition
       x: 0, y: 0, z: -15,
       ease: 'power2.inOut', // Target position

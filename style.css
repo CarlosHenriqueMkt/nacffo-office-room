@@ -102,10 +102,115 @@ nav > button {
   transition: all 0.2s ease;
 }
 
-.four {
-  display: none !important;
-  z-index: -1 !important;
+.secondScene {
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
 }
+
+.secondScene > div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.secondScene > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.secondScene > div:nth-child(1) > img {
+  filter: brightness(0) invert(1);
+}
+
+.secondScene > div:nth-child(1) > p {
+  font-size: 24px;
+  width: 50%;
+  text-align: center;
+  letter-spacing: 4px;
+  line-height: 36px;
+}
+
+.secondScene > div:nth-child(2) > button {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+
+  padding: 12px 16px;
+  border: 1px solid white;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.secondScene > div:nth-child(2) > button:hover {
+  background-color: var(--red);
+  border: none;
+  scale: 1.05;
+  transition: all 0.2s ease;
+}
+
+.thirdScene {
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+}
+
+.thirdScene > div:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.thirdScene > div:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.thirdScene > div:nth-child(1) > img {
+  filter: brightness(0) invert(1);
+}
+
+.thirdScene > div:nth-child(1) > p {
+  font-size: 24px;
+  width: 50%;
+  text-align: center;
+  letter-spacing: 4px;
+  line-height: 36px;
+}
+
+.thirdScene > div:nth-child(2) > button {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+
+  padding: 12px 16px;
+  border: 1px solid white;
+  border-radius: 8px;
+  background-color: transparent;
+}
+
+.thirdScene > div:nth-child(2) > button:hover {
+  background-color: var(--red);
+  border: none;
+  scale: 1.05;
+  transition: all 0.2s ease;
+}
+
+/* Fourth Scene */
 
 #blocker {
   position: absolute;
@@ -127,4 +232,61 @@ nav > button {
   text-align: center;
   font-size: 14px;
   cursor: pointer;
+}
+
+.point
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* pointer-events: none; */
+}
+
+.point .label
+{
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #00000077;
+    border: 1px solid #ffffff77;
+    color: #ffffff;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+    line-height: 40px;
+    font-weight: 100;
+    font-size: 14px;
+    cursor: help;
+    transform: scale(0, 0);
+    transition: transform 0.3s;
+}
+
+.point .text
+{
+    position: absolute;
+    top: 30px;
+    left: -120px;
+    width: 200px;
+    padding: 20px;
+    border-radius: 4px;
+    background: #00000077;
+    border: 1px solid #ffffff77;
+    color: #ffffff;
+    line-height: 1.3em;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.point.interactive .label {
+  transform: scale(1, 1);
+}
+
+.point.interactive:hover .text {
+  opacity: 1;
 }
