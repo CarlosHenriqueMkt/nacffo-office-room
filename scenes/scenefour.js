@@ -1,10 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-import GUI from 'lil-gui'; 
+import { RGBELoader } from 'three/examples/jsm/Addons.js';
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -12,16 +10,7 @@ const interactionRange = 2;
 
 export function setupSceneFour(renderer) {
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x005500)
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const gui = new GUI();
-
-    gui.add(camera.position, 'x').min(-100).max(100).step(0.1).name('camera position X')
-    gui.add(camera.position, 'y').min(-100).max(100).step(0.1).name('camera position Y')
-    gui.add(camera.position, 'z').min(-100).max(100).step(0.1).name('camera position Z')
-    gui.add(camera.rotation, 'x').min(-100).max(100).step(0.1).name('camera rotation X')
-    gui.add(camera.rotation, 'y').min(-100).max(100).step(0.1).name('camera rotation Y')
-    gui.add(camera.rotation, 'z').min(-100).max(100).step(0.1).name('camera rotation Z')
 
     const axesHelper = new THREE.AxesHelper( 5 );
     scene.add( axesHelper );
@@ -36,8 +25,8 @@ export function setupSceneFour(renderer) {
     sunLight.position.set(0, 2, 0);
     sunLight.rotation.z = -5 // Position the light
     sunLight.castShadow = true; // Enable shadows
-    
-    const helper = new THREE.DirectionalLightHelper( sunLight, 1, 0x00dd00 );
+
+    const helper = new THREE.DirectionalLightHelper( sunLight, 2, 0x00dd00 );
     scene.add( helper );
 
     // Configure shadow properties
@@ -57,9 +46,12 @@ export function setupSceneFour(renderer) {
 
     function model() {
 
-        const environment = new RoomEnvironment( renderer );
-        const pmremGenerator = new THREE.PMREMGenerator( renderer );
-        scene.environment = pmremGenerator.fromScene( environment ).texture;
+        const env = new RGBELoader();
+        env.load('lounge.hdr', (texture) => {
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+            scene.background = texture;
+            scene.environment = texture
+        })
       
         // Setup DracoLoader
         const dracoLoader = new DRACOLoader();
@@ -293,6 +285,7 @@ export function setupSceneFour(renderer) {
             } else {
                 // Hide point if out of range
                 point.element.classList.remove('visible', 'interactive');
+                point.element.querySelector('.text').style.opacity = '0';
             }
     
             // Update position on screen
