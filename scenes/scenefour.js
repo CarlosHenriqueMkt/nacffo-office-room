@@ -86,7 +86,7 @@ export function setupSceneFour(renderer) {
             if (keysMaterial) {
                 keysMaterial.color.set('#B01C12');
             }
-        }, 5000);
+        }, 15000);
     }
 
     const raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0), 0, 10);
