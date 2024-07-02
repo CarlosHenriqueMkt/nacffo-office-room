@@ -44,7 +44,6 @@ nav > button {
   display: none;
 }
 .content.active {
-  border: 1px solid red;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -103,7 +102,6 @@ nav > button {
 }
 
 .secondScene {
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -157,7 +155,6 @@ nav > button {
 }
 
 .thirdScene {
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   align-items: center;

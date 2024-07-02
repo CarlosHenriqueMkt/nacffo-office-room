@@ -12,9 +12,6 @@ export function setupSceneFour(renderer) {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-    const axesHelper = new THREE.AxesHelper( 5 );
-    scene.add( axesHelper );
-
     // Add ambient light for overall illumination
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Soft white light
     scene.add(ambientLight);
@@ -23,11 +20,8 @@ export function setupSceneFour(renderer) {
     
     const sunLight = new THREE.DirectionalLight(0xffffff, 2); // Bright white light
     sunLight.position.set(0, 2, 0);
-    sunLight.rotation.z = -5 // Position the light
+    sunLight.rotation.set(-24, 2, -4.6);
     sunLight.castShadow = true; // Enable shadows
-
-    const helper = new THREE.DirectionalLightHelper( sunLight, 2, 0x00dd00 );
-    scene.add( helper );
 
     // Configure shadow properties
     sunLight.shadow.mapSize.width = 2048;
@@ -61,7 +55,7 @@ export function setupSceneFour(renderer) {
         const loader = new GLTFLoader();
         loader.setDRACOLoader(dracoLoader);
       
-        loader.load( 'v5.glb', function ( gltf ) {
+        loader.load( 'vf.glb', function ( gltf ) {
           
           const model = gltf.scene
           model.traverse(function (node) {
