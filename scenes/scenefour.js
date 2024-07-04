@@ -57,7 +57,7 @@ export function setupSceneFour(renderer) {
         const loader = new GLTFLoader();
         loader.setDRACOLoader(dracoLoader);
       
-        loader.load( './vf.glb', function ( gltf ) {
+        loader.load( './scene.gltf', function ( gltf ) {
           
           const blenderModel = gltf.scene
           blenderModel.traverse(function (node) {
@@ -71,6 +71,7 @@ export function setupSceneFour(renderer) {
                 keysMaterial = node.material;
             }
         });
+            scene.position.y = -.5
           scene.add( blenderModel );
       
         }, undefined, function ( error ) {
